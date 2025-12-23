@@ -1,17 +1,46 @@
-namespace SistemaVendas.Froms
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using SistemaVendas.Application;
+using SistemaVendas.Application.Extension;
+using SistemaVendas.Froms;
+using SistemaVendas.Infrastructure.Data;
+using SistemaVendas.Infrastructure.Extension;
+using System;
+using System.Windows.Forms;
+
+namespace SistemaVendas.Forms
 {
-    internal static class Program
+    public static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
+        public static IServiceProvider ServiceProvider { get; private set; }
+
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false)
+                .Build();
+
+            var services = new ServiceCollection();
+
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+           
+            services.AddSingleton(new DbConnectionFactory(connectionString));
+
+            services.AddApplication();
+            services.AddInfrastructure(configuration);
+            services.AddScoped<TelaPrincipal>();
+
+
+            ServiceProvider = services.BuildServiceProvider();
+
+            var formInicial = ServiceProvider
+               .GetRequiredService<TelaPrincipal>();
+
+            System.Windows.Forms.Application.Run(formInicial);
+
         }
     }
 }

@@ -7,12 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Shared\SistemaVendas.Communication\SistemaVendas.Communication.csproj" />
     <ProjectReference Include="..\Shared\SistemaVendas.Exceptions\SistemaVendas.Exceptions.csproj" />
     <ProjectReference Include="..\SistemaVendas.Domain\SistemaVendas.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Repository\" />
   </ItemGroup>
 
   <ItemGroup>

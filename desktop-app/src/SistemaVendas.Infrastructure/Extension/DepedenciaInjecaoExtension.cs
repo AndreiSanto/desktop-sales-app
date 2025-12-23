@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SistemaVendas.Domain.Interface;
+using SistemaVendas.Domain.Repository.Interface;
 using SistemaVendas.Infrastructure.Data;
+using SistemaVendas.Infrastructure.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +21,7 @@ namespace SistemaVendas.Infrastructure.Extension
         {
        
             AddApiContext(services, configuration);
+            AddRepositories(services);
 
         }
 
@@ -31,6 +35,14 @@ namespace SistemaVendas.Infrastructure.Extension
            
                 )
             );
+
+        }
+
+        private static void AddRepositories(IServiceCollection services)
+        {
+            services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
         }
     }
