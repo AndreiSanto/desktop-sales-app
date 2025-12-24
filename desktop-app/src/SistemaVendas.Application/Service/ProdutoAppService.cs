@@ -12,32 +12,32 @@ using System.Threading.Tasks;
 
 namespace SistemaVendas.Application.Service
 {
-    public class ClienteAppService : IClienteAppService
+    public class ProdutoAppService : IProdutoAppService
     {
-        private readonly IClienteRepository _clienteRepository;
+        private readonly IProdutoRepository _produtoRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ClienteAppService(IClienteRepository clienteRepository, IMapper mapper, IUnitOfWork unitOfWork)
+        public ProdutoAppService(IProdutoRepository produtoRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
-            _clienteRepository = clienteRepository;
+            _produtoRepository = produtoRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ClienteDTO> Alterar(ClienteDTO clienteDTO)
+        public async Task<ProdutoDTO> Alterar(ProdutoDTO produtoDTO)
         {
             await _unitOfWork.BeginAsync();
 
             try
             {
-                var cliente = _mapper.Map<Cliente>(clienteDTO);
+                var produto = _mapper.Map<Produto>(produtoDTO);
 
-                await _clienteRepository.AtualizarAsync(cliente);
+                await _produtoRepository.AtualizarAsync(produto);
 
                 await _unitOfWork.CommitAsync();
 
-                return clienteDTO;
+                return produtoDTO;
             }
             catch
             {
@@ -46,19 +46,19 @@ namespace SistemaVendas.Application.Service
             }
         }
 
-        public async Task<ClienteDTO> Cadastrar(ClienteDTO clienteDTO)
+        public async Task<ProdutoDTO> Cadastrar(ProdutoDTO produtoDTO)
         {
             await _unitOfWork.BeginAsync();
 
             try
             {
-                var cliente = _mapper.Map<Cliente>(clienteDTO);
+                var produto = _mapper.Map<Produto>(produtoDTO);
 
-                await _clienteRepository.CadastrarAsync(cliente);
+                await _produtoRepository.CadastrarAsync(produto);
 
                 await _unitOfWork.CommitAsync();
 
-                return clienteDTO;
+                return produtoDTO;
             }
             catch
             {
@@ -66,20 +66,18 @@ namespace SistemaVendas.Application.Service
                 throw;
             }
         }
-
 
         public async Task<bool> Excluir(int id)
         {
-
             await _unitOfWork.BeginAsync();
 
             try
             {
-                var cliente = await _clienteRepository.ObterClienteAsync(id);
+                var produto = await _produtoRepository.ObterProdutoAsync(id);
 
-                
 
-                await _clienteRepository.ExcluirAsync(cliente.Id);
+
+                await _produtoRepository.ExcluirAsync(id);
 
                 await _unitOfWork.CommitAsync();
 
@@ -88,19 +86,18 @@ namespace SistemaVendas.Application.Service
             catch
             {
                 await _unitOfWork.RollbackAsync();
-                
+
                 throw;
             }
-
         }
 
-        public async Task<List<Cliente>> ListarClientesAsync()
+        public async Task<List<Produto>> ListarProdutosAsync()
         {
             await _unitOfWork.BeginAsync();
 
             try
             {
-                return await _clienteRepository.ListarClientesAsync();
+                return await _produtoRepository.ListarProdutoAsync();
 
             }
             catch

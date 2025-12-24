@@ -47,57 +47,11 @@ namespace SistemaVendas.Froms
 
         }
 
-        private void frmClientes_Load(object sender, EventArgs e)
+        private async void frmClientes_Load(object sender, EventArgs e)
         {
-            var clientes = new List<ClienteDTO>
-    {
-        new ClienteDTO { Nome = "João Silva", Email = "joao.silva@email.com", Telefone = "(27) 99911-2233" },
-        new ClienteDTO { Nome = "Maria Oliveira", Email = "maria.oliveira@email.com", Telefone = "(27) 98822-3344" },
-        new ClienteDTO { Nome = "Carlos Santos", Email = "carlos.santos@email.com", Telefone = "(27) 97733-4455" },
-        new ClienteDTO { Nome = "Ana Pereira", Email = "ana.pereira@email.com", Telefone = "(27) 96644-5566" },
-        new ClienteDTO { Nome = "Lucas Costa", Email = "lucas.costa@email.com", Telefone = "(27) 95555-6677" }
-    };
-
-            dataGridViewClientes.AutoGenerateColumns = false;
-            dataGridViewClientes.Columns.Clear();
-
-            dataGridViewClientes.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "Nome",
-                HeaderText = "Nome",
-                DataPropertyName = "Nome",
-                Width = 300
-            });
-
-            dataGridViewClientes.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "Email",
-                HeaderText = "E-mail",
-                DataPropertyName = "Email",
-                Width = 400
-            });
-
-            dataGridViewClientes.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "Telefone",
-                HeaderText = "Telefone",
-                DataPropertyName = "Telefone",
-                Width = 200
-            });
-
-            dataGridViewClientes.DataSource = clientes;
-
+            await CarregarGrid();
             EstadoNovo();
-
-            dataGridViewClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewClientes.MultiSelect = false;
-            dataGridViewClientes.ReadOnly = true;
-            dataGridViewClientes.RowHeadersVisible = false;
-
-            // Ajuste visual do header
-            dataGridViewClientes.EnableHeadersVisualStyles = false;
-            dataGridViewClientes.ColumnHeadersDefaultCellStyle.BackColor = Color.Gainsboro;
-            dataGridViewClientes.ColumnHeadersDefaultCellStyle.SelectionBackColor = Color.Gainsboro;
+            ConfigurarGrid();
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
@@ -117,11 +71,27 @@ namespace SistemaVendas.Froms
             txtTelefone.Text = row.Cells["Telefone"].Value.ToString();
 
             // Se tiver ID (recomendado)
-            //var clienteIdSelecionado = (int)row.Cells["Id"].Value;
+             clienteIdSelecionado = (int)row.Cells["Id"].Value;
 
             EstadoEdicao();
 
         }
+
+        private void dataGridViewClientes_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+
+            var row = dataGridViewClientes.Rows[e.RowIndex];
+
+            clienteIdSelecionado = (int)row.Cells["Id"].Value;
+            txtNome.Text = row.Cells["Nome"].Value.ToString();
+            txtEmail.Text = row.Cells["Email"].Value.ToString();
+            txtTelefone.Text = row.Cells["Telefone"].Value.ToString();
+
+            EstadoEdicao();
+        }
+
 
         private void EstadoNovo()
         {
@@ -160,7 +130,7 @@ namespace SistemaVendas.Froms
             }
             else
             {
-                btnSalvar.Text = "Alterar";
+                
                 var confirmar = MessageBox.Show(
                     "Deseja realmente alterar este cliente?",
                     "Confirmação",
@@ -170,13 +140,13 @@ namespace SistemaVendas.Froms
 
                 if (confirmar == DialogResult.Yes)
                 {
-                    //await _clienteAppService.Atualizar(clienteDto);
+                    await _clienteAppService.Alterar(clienteDto);
                     MessageBox.Show("Cliente alterado com sucesso!");
                 }
             }
 
             EstadoNovo();
-            // Recarregar grid depois
+            await CarregarGrid();
         }
 
         private async void btnExcluir_Click(object sender, EventArgs e)
@@ -193,13 +163,69 @@ namespace SistemaVendas.Froms
 
             if (confirmar == DialogResult.Yes)
             {
-               // await _clienteAppService.Excluir(clienteIdSelecionado.Value);
+               await _clienteAppService.Excluir(clienteIdSelecionado.Value);
                 MessageBox.Show("Cliente excluído com sucesso!");
 
                 EstadoNovo();
-                // Recarregar grid depois
+                await CarregarGrid();
+
+
             }
         }
+
+        private void ConfigurarGrid()
+        {
+            dataGridViewClientes.AutoGenerateColumns = false;
+            dataGridViewClientes.Columns.Clear();
+
+            dataGridViewClientes.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Id",
+                HeaderText = "Código",
+                DataPropertyName = "Id",
+                Width = 80
+            });
+
+            dataGridViewClientes.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Nome",
+                HeaderText = "Nome",
+                DataPropertyName = "Nome",
+                Width = 300
+            });
+
+            dataGridViewClientes.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Email",
+                HeaderText = "E-mail",
+                DataPropertyName = "Email",
+                Width = 350
+            });
+
+            dataGridViewClientes.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "Telefone",
+                HeaderText = "Telefone",
+                DataPropertyName = "Telefone",
+                Width = 200
+            });
+
+            dataGridViewClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewClientes.MultiSelect = false;
+            dataGridViewClientes.ReadOnly = true;
+            dataGridViewClientes.RowHeadersVisible = false;
+
+            // Evita header "selecionado"
+            dataGridViewClientes.EnableHeadersVisualStyles = false;
+            dataGridViewClientes.ColumnHeadersDefaultCellStyle.SelectionBackColor =
+                dataGridViewClientes.ColumnHeadersDefaultCellStyle.BackColor;
+        }
+        private async Task CarregarGrid()
+        {
+            var clientes = await _clienteAppService.ListarClientesAsync();
+            dataGridViewClientes.DataSource = clientes;
+        }
+
 
     }
 }

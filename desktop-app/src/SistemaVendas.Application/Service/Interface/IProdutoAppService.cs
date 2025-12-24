@@ -1,4 +1,5 @@
 ﻿using SistemaVendas.Application.DTOs;
+using SistemaVendas.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,10 @@ namespace SistemaVendas.Application.Service.Interface
     {
         public Task<ProdutoDTO> Cadastrar(ProdutoDTO produtoDTO);
         public Task<ProdutoDTO> Alterar(ProdutoDTO produtoDTO);
-        public Task<bool> Excluir(ProdutoDTO produtoDTO);
+        public Task<bool> Excluir(int id);
+
+        public Task<List<Produto>> ListarProdutosAsync();
+
+
     }
 }

@@ -32,6 +32,10 @@ namespace SistemaVendas.Forms
             services.AddApplication();
             services.AddInfrastructure(configuration);
             services.AddScoped<TelaPrincipal>();
+            services.AddTransient<frmClientes>();
+            services.AddTransient<frmProdutos>();
+
+
 
 
             ServiceProvider = services.BuildServiceProvider();

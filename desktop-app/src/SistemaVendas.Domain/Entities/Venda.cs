@@ -10,13 +10,15 @@ namespace SistemaVendas.Domain.Entities
     {
         public int Id { get; set; }
 
-        public DateTime DataVenda {  get; set; }
-
-        public decimal ValorTotal { get; set; }
+        public DateTime DataVenda { get; set; } = DateTime.Now;
 
         public int ClienteId { get; set; }
-
         public Cliente Cliente { get; set; } = null!;
 
+        public List<VendaItem> Itens { get; set; } = new();
+
+        public decimal ValorTotal =>
+            Itens.Sum(i => i.PrecoVenda * i.Quantidade);
     }
+
 }

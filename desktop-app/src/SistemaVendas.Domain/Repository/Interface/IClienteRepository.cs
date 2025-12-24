@@ -11,8 +11,10 @@ namespace SistemaVendas.Domain.Repository.Interface
     public interface IClienteRepository
     {
         public Task<Cliente> AtualizarAsync(Cliente cliente);
+        public Task<Cliente> ObterClienteAsync(int Id);
+       // public List<Task<Cliente>> ObterClienteAsync(int Id);
         public Task<Cliente> CadastrarAsync(Cliente cliente);
-      //  public Task<RetornoPaginacao<Cliente>> ListarClientesAsync(int pagina, int totalPatina, FiltroDTO filtroDto);
+       public Task<List<Cliente>> ListarClientesAsync();
         public Task<bool> ExcluirAsync(int id);
 
     }

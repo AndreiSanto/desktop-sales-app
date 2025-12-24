@@ -15,6 +15,7 @@ namespace SistemaVendas.Application.Service.AutoMapper
         public AutoMapping()
         {
             CreateMap<ClienteDTO, Cliente>();
+            CreateMap<ProdutoDTO, Produto>();
 
         }
     }

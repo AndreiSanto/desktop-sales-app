@@ -19,12 +19,6 @@ namespace SistemaVendas.Infrastructure.Data.Repository
         {
             _uow = uow;
         }
-
-        public Task<Cliente> AtualizarAsync(Cliente cliente)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Cliente> CadastrarAsync(Cliente cliente)
         {
             const string sql = """
@@ -41,12 +35,92 @@ namespace SistemaVendas.Infrastructure.Data.Repository
             cliente.Id = Convert.ToInt32(await cmd.ExecuteScalarAsync());
             return cliente;
         }
-
-        public Task<bool> ExcluirAsync(int id)
+        public async Task<Cliente> AtualizarAsync(Cliente cliente)
         {
-            throw new NotImplementedException();
+            const string sql = """
+            UPDATE clientes
+            SET nome = @nome,
+                email = @email,
+                telefone = @telefone
+            WHERE id = @id;
+        """;
+
+            await using var cmd = new NpgsqlCommand(sql, _uow.Connection, _uow.Transaction);
+            cmd.Parameters.AddWithValue("id", cliente.Id);
+            cmd.Parameters.AddWithValue("nome", cliente.Nome);
+            cmd.Parameters.AddWithValue("email", cliente.Email);
+            cmd.Parameters.AddWithValue("telefone", cliente.Telefone);
+
+            await cmd.ExecuteNonQueryAsync();
+            return cliente;
+        }
+        public async Task<bool> ExcluirAsync(int id)
+        {
+            const string sql = """
+            DELETE FROM clientes
+            WHERE id = @id;
+        """;
+
+            await using var cmd = new NpgsqlCommand(sql, _uow.Connection, _uow.Transaction);
+            cmd.Parameters.AddWithValue("id", id);
+
+            var linhasAfetadas = await cmd.ExecuteNonQueryAsync();
+            return linhasAfetadas > 0;
         }
 
-        
+        public async Task<Cliente> ObterClienteAsync(int id)
+        {
+            const string sql = """
+            SELECT id, nome, email, telefone
+            FROM clientes
+            WHERE id = @id;
+        """;
+
+            await using var cmd = new NpgsqlCommand(sql, _uow.Connection, _uow.Transaction);
+            cmd.Parameters.AddWithValue("id", id);
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            if (!reader.Read())
+                return null;
+
+            return new Cliente
+            {
+                Id = reader.GetInt32(0),
+                Nome = reader.GetString(1),
+                Email = reader.GetString(2),
+                Telefone = reader.GetString(3)
+            };
+        }
+
+        public async Task<List<Cliente>> ListarClientesAsync()
+        {
+            const string sql = """
+        SELECT id, nome, email, telefone
+        FROM clientes
+        ORDER BY nome;
+    """;
+
+            var clientes = new List<Cliente>();
+
+            await using var cmd = new NpgsqlCommand(sql, _uow.Connection, _uow.Transaction);
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                clientes.Add(new Cliente
+                {
+                    Id = reader.GetInt32(0),
+                    Nome = reader.GetString(1),
+                    Email = reader.GetString(2),
+                    Telefone = reader.GetString(3)
+                });
+            }
+
+            return clientes;
+        }
+
     }
+
 }
+

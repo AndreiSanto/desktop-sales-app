@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,10 +13,13 @@ namespace SistemaVendas.Froms
 {
     public partial class TelaPrincipal : Form
     {
+        private readonly IServiceProvider _serviceProvider;
         private Form frmAtivo;
-        public TelaPrincipal()
+
+        public TelaPrincipal(IServiceProvider serviceProvider)
         {
             InitializeComponent();
+            _serviceProvider = serviceProvider;
         }
 
         private void TelaPrincipal_Load(object sender, EventArgs e)
@@ -23,33 +27,41 @@ namespace SistemaVendas.Froms
 
         }
 
-        private void AbrirForm(Form form)
+        private void AbrirForm<T>() where T : Form
         {
-            // Fecha o form ativo, se existir
             if (frmAtivo != null)
-                frmAtivo.Close();
+            {
+                frmAtivo.Hide();
+                frmAtivo.Dispose();
+            }
 
-            frmAtivo = form;
+            frmAtivo = _serviceProvider.GetRequiredService<T>();
 
-            form.TopLevel = false;
-            form.FormBorderStyle = FormBorderStyle.None;
-            form.Dock = DockStyle.Fill;
+            frmAtivo.TopLevel = false;
+            frmAtivo.FormBorderStyle = FormBorderStyle.None;
+            frmAtivo.Dock = DockStyle.Fill;
 
             panelForm.Controls.Clear();
-            panelForm.Controls.Add(form);
-            panelForm.Tag = form;
+            panelForm.Controls.Add(frmAtivo);
 
-            form.Show();
+            frmAtivo.Show();
         }
+
+
 
         private void bntCliente_Click(object sender, EventArgs e)
         {
-            AbrirForm(new frmClientes(null));
+            AbrirForm<frmClientes>();
         }
 
         private void panelForm_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void bntProduto_Click(object sender, EventArgs e)
+        {
+            AbrirForm<frmProdutos>();
         }
     }
 }

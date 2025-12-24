@@ -170,6 +170,7 @@
             dataGridViewClientes.Name = "dataGridViewClientes";
             dataGridViewClientes.Size = new Size(1198, 360);
             dataGridViewClientes.TabIndex = 8;
+            dataGridViewClientes.CellClick += dataGridViewClientes_CellClick;
             dataGridViewClientes.CellContentClick += dataGridViewClientes_CellContentClick;
             // 
             // groupBoxListCliente
