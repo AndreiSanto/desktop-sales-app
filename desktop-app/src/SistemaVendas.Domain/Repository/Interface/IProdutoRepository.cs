@@ -15,5 +15,7 @@ namespace SistemaVendas.Domain.Repository.Interface
         public Task<Produto> CadastrarAsync(Produto produto);
         public Task<List<Produto>> ListarProdutoAsync();
         public Task<bool> ExcluirAsync(int id);
+        public Task BaixarEstoqueAsync(int produtoId, int quantidade);
+
     }
 }

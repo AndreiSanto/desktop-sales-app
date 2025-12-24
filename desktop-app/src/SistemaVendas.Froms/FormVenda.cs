@@ -1,135 +1,43 @@
 ﻿using SistemaVendas.Application.DTOs;
-using SistemaVendas.Application.Service;
 using SistemaVendas.Application.Service.Interface;
 using SistemaVendas.Domain.Entities;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SistemaVendas.Froms
 {
     public partial class frmVendas : Form
     {
-
-        private int? produtoIdSelecionado = null;
         private readonly IProdutoAppService _produtoAppService;
         private readonly IClienteAppService _clienteAppService;
+        private readonly IVendaAppService _vendaAppService;
 
-
-
-
-
-        public frmVendas(IProdutoAppService produtoAppService, IClienteAppService clienteAppService)
+        public frmVendas(
+            IProdutoAppService produtoAppService,
+            IClienteAppService clienteAppService,
+            IVendaAppService vendaAppService)
         {
             InitializeComponent();
             _produtoAppService = produtoAppService;
             _clienteAppService = clienteAppService;
+            _vendaAppService = vendaAppService;
         }
 
-
-
-
-
-
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-
+        // ========================= LOAD =========================
         private async void frmVendas_Load(object sender, EventArgs e)
         {
-
             await CarregarClientes();
             await CarregarProdutos();
 
+            dataGridViewItensVenda.AutoGenerateColumns = false;
         }
 
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-
-
-        private void dataGridViewVendas_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0)
-                return;
-
-
-        }
-
-
-
-
-
-
-
-        private async void btnSalvar_Click(object sender, EventArgs e)
-        {
-
-
-            var produtoDto = new ProdutoDTO
-            {
-                Id = produtoIdSelecionado ?? 0,
-
-            };
-
-            if (produtoIdSelecionado == null)
-            {
-                await _produtoAppService.Cadastrar(produtoDto);
-                MessageBox.Show("Produto cadastrado com sucesso!");
-            }
-            else
-            {
-                var confirmar = MessageBox.Show(
-                    "Deseja realmente alterar este produto?",
-                    "Confirmação",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                );
-
-                if (confirmar == DialogResult.Yes)
-                {
-                    await _produtoAppService.Alterar(produtoDto);
-                    MessageBox.Show("Produto alterado com sucesso!");
-                }
-            }
-
-        }
-
-
-        private async void btnExcluir_Click(object sender, EventArgs e)
-        {
-            if (produtoIdSelecionado == null)
-                return;
-
-            var confirmar = MessageBox.Show(
-                "Deseja realmente excluir este produto?",
-                "Confirmação",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning
-            );
-
-            if (confirmar == DialogResult.Yes)
-            {
-                MessageBox.Show("Produto excluído com sucesso!");
-
-
-
-
-            }
-        }
-
+        // ========================= CLIENTES =========================
         private async Task CarregarClientes()
         {
-            var clientes = await _clienteAppService.ListarClientesAsync(); //mudar pra trazer o DTO
+            var clientes = await _clienteAppService.ListarClientesAsync();
 
             cbClientes.DataSource = clientes;
             cbClientes.DisplayMember = "Nome";
@@ -147,59 +55,13 @@ namespace SistemaVendas.Froms
             cbProdutos.SelectedIndex = -1;
         }
 
-
-
-        private void ConfigurarCampos()
-        {
-
-        }
-
-
-
-
-
-
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void nudPreco_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-
-
-
-
-        private void dataGridViewVendas_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void groupBoxProduto_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void cbProdutos_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbProdutos.SelectedItem == null)
                 return;
+
             var produto = (Produto)cbProdutos.SelectedItem;
-            nudQuantidade.Text = produto.Preco.ToString("N2");
-        }
-
-        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
-        {
-
+            nudPreco.Text = produto.Preco.ToString("N2");
         }
 
         private void btnAdicionarProduto_Click(object sender, EventArgs e)
@@ -226,23 +88,19 @@ namespace SistemaVendas.Froms
             }
 
             var subtotal = quantidade * produto.Preco;
-            dataGridViewItensVenda.AutoGenerateColumns = false;
-
 
             dataGridViewItensVenda.Rows.Add(
-                produto.Id,          // oculto
+                produto.Id,          // ProdutoId (oculto)
                 produto.Nome,
                 quantidade,
                 produto.Preco,
                 subtotal
             );
 
-            // Atualiza estoque local (importante!)
             produto.QtdEstoque -= quantidade;
 
             AtualizarTotal();
         }
-
 
         private void AtualizarTotal()
         {
@@ -256,6 +114,48 @@ namespace SistemaVendas.Froms
             lblTotal.Text = $"Total: R$ {total:N2}";
         }
 
+        private async void btnFinalizarVenda_Click(object sender, EventArgs e)
+        {
+            if (cbClientes.SelectedItem == null)
+            {
+                MessageBox.Show("Selecione um cliente.");
+                return;
+            }
 
+            if (dataGridViewItensVenda.Rows.Count == 0)
+            {
+                MessageBox.Show("Adicione produtos à venda.");
+                return;
+            }
+
+            var vendaDTO = new VendaDTO
+            {
+                ClienteId = (int)cbClientes.SelectedValue,
+                DataVenda = DateTime.Now
+            };
+
+            foreach (DataGridViewRow row in dataGridViewItensVenda.Rows)
+            {
+                vendaDTO.Itens.Add(new VendaItemDTO
+                {
+                    ProdutoId = Convert.ToInt32(row.Cells["ProdutoId"].Value),
+                    Quantidade = Convert.ToInt32(row.Cells["Quantidade"].Value),
+                    PrecoVenda = Convert.ToDecimal(row.Cells["Preco"].Value)
+                });
+            }
+
+            vendaDTO.ValorTotal =
+                vendaDTO.Itens.Sum(i => i.PrecoVenda * i.Quantidade);
+
+            await _vendaAppService.RealizarVenda(vendaDTO);
+
+            MessageBox.Show("Venda realizada com sucesso!");
+
+            dataGridViewItensVenda.Rows.Clear();
+            lblTotal.Text = "Total: R$ 0,00";
+            cbClientes.SelectedIndex = -1;
+        }
+
+       
     }
 }

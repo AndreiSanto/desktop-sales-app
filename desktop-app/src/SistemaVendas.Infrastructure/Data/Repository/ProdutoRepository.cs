@@ -124,4 +124,19 @@ public class ProdutoRepository : IProdutoRepository
             QtdEstoque = reader.GetInt32(4)
         };
     }
+
+    public async Task BaixarEstoqueAsync(int produtoId, int quantidade)
+    {
+        const string sql = @"
+            UPDATE produtos
+            SET estoque = estoque - @quantidade
+            WHERE id = @id;
+        ";
+
+        await using var cmd = new NpgsqlCommand(sql, _uow.Connection, _uow.Transaction);
+        cmd.Parameters.AddWithValue("@quantidade", quantidade);
+        cmd.Parameters.AddWithValue("@id", produtoId);
+
+        await cmd.ExecuteNonQueryAsync();
+    }
 }

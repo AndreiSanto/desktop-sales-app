@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace SistemaVendas.Application.DTOs
 {
+
     public class VendaDTO
     {
-        public int ClientId { get; set; }
+        public int ClienteId { get; set; }
 
+        public DateTime DataVenda { get; set; } = DateTime.Now;
 
-        public IList<VendaItemDTO> VendaItensDTOs {  get; set; }
+        public List<VendaItemDTO> Itens { get; set; } = new();
 
-        public VendaDTO() {
-
-            this.VendaItensDTOs = new List<VendaItemDTO>();
-        }
+        public decimal ValorTotal { get; set; }
     }
+
+
 }
+

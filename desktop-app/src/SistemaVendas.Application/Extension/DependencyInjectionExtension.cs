@@ -23,6 +23,7 @@ namespace SistemaVendas.Application.Extension
         {
             services.AddScoped<IClienteAppService, ClienteAppService>();
             services.AddScoped<IProdutoAppService, ProdutoAppService>();
+            services.AddScoped<IVendaAppService, VendaAppService>();
 
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

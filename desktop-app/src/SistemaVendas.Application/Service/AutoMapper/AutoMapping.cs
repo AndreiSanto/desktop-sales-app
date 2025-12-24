@@ -16,6 +16,8 @@ namespace SistemaVendas.Application.Service.AutoMapper
         {
             CreateMap<ClienteDTO, Cliente>();
             CreateMap<ProdutoDTO, Produto>();
+            CreateMap<VendaDTO, Venda>().ForMember(a => a.ValorTotal, b => b.Ignore());
+            CreateMap<VendaItemDTO, VendaItem>();
 
         }
     }

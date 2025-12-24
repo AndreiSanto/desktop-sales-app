@@ -9,6 +9,6 @@ namespace SistemaVendas.Application.Service.Interface
 {
     public interface IVendaAppService
     {
-        Task<int> RealizarVendaAsync(VendaDTO vendaDto);
+        Task RealizarVenda(VendaDTO vendaDto);
     }
 }
