@@ -7,7 +7,7 @@ namespace SistemaVendas.Froms
 {
     public partial class frmProdutos : Form
     {
-        private Produto _produtoSelecionado;
+       
         private int? produtoIdSelecionado = null;
         private readonly IProdutoAppService _produtoAppService;
 
@@ -58,11 +58,18 @@ namespace SistemaVendas.Froms
             if (e.RowIndex < 0)
                 return;
 
+            var row = dataGridViewProdutos.Rows[e.RowIndex];
 
+            produtoIdSelecionado = (int)row.Cells["Id"].Value;
 
+            txtNome.Text = row.Cells["Nome"].Value.ToString();
+            txtDescricao.Text = row.Cells["Descricao"].Value.ToString();
+            nudPreco.Value = Convert.ToDecimal(row.Cells["Preco"].Value);
+            nudEstoque.Value = Convert.ToInt32(row.Cells["QtdEstoque"].Value);
 
             EstadoEdicao();
         }
+
 
 
         private void EstadoNovo()
@@ -84,9 +91,9 @@ namespace SistemaVendas.Froms
 
         private async void btnSalvar_Click(object sender, EventArgs e)
         {
-
             if (!Validar())
                 return;
+
             var produtoDto = new ProdutoDTO
             {
                 Id = produtoIdSelecionado ?? 0,
@@ -96,16 +103,15 @@ namespace SistemaVendas.Froms
                 QtdEstoque = (int)nudEstoque.Value
             };
 
-
             if (produtoIdSelecionado == null)
             {
+                await _produtoAppService.Cadastrar(produtoDto);
                 MessageBox.Show("Produto cadastrado com sucesso!");
             }
             else
             {
-
                 var confirmar = MessageBox.Show(
-                    "Deseja realmente alterar este cliente?",
+                    "Deseja realmente alterar este produto?",
                     "Confirmação",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question
@@ -113,6 +119,7 @@ namespace SistemaVendas.Froms
 
                 if (confirmar == DialogResult.Yes)
                 {
+                    await _produtoAppService.Alterar(produtoDto);
                     MessageBox.Show("Produto alterado com sucesso!");
                 }
             }
@@ -120,6 +127,7 @@ namespace SistemaVendas.Froms
             EstadoNovo();
             await CarregarGrid();
         }
+
 
         private async void btnExcluir_Click(object sender, EventArgs e)
         {
@@ -258,7 +266,7 @@ namespace SistemaVendas.Froms
             txtDescricao.Clear();
             nudPreco.Value = 0.01M;
             nudEstoque.Value = 0;
-            _produtoSelecionado = null;
+            produtoIdSelecionado = null;
         }
 
         private void dataGridViewProdutos_CellContentClick(object sender, DataGridViewCellEventArgs e)

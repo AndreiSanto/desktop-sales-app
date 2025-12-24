@@ -63,5 +63,11 @@ namespace SistemaVendas.Froms
         {
             AbrirForm<frmProdutos>();
         }
+
+        private void bntVenda_Click(object sender, EventArgs e)
+        {
+            AbrirForm<frmVendas>();
+
+        }
     }
 }

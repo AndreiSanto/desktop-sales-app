@@ -22,6 +22,7 @@ namespace SistemaVendas.Application.Extension
         private static void AddServicesApplication(IServiceCollection services)
         {
             services.AddScoped<IClienteAppService, ClienteAppService>();
+            services.AddScoped<IProdutoAppService, ProdutoAppService>();
 
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

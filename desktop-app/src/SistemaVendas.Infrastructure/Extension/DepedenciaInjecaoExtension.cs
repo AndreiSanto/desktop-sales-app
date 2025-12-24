@@ -42,6 +42,7 @@ namespace SistemaVendas.Infrastructure.Extension
         {
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
 
         }

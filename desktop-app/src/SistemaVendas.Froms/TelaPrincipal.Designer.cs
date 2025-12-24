@@ -61,6 +61,7 @@
             bntVenda.TextAlign = ContentAlignment.MiddleLeft;
             bntVenda.TextImageRelation = TextImageRelation.ImageBeforeText;
             bntVenda.UseVisualStyleBackColor = true;
+            bntVenda.Click += bntVenda_Click;
             // 
             // bntProduto
             // 

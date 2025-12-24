@@ -34,6 +34,7 @@ namespace SistemaVendas.Forms
             services.AddScoped<TelaPrincipal>();
             services.AddTransient<frmClientes>();
             services.AddTransient<frmProdutos>();
+            services.AddTransient<frmVendas>();
 
 
 
