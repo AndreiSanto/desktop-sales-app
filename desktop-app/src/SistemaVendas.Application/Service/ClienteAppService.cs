@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using SistemaVendas.Application.DTOs;
 using SistemaVendas.Application.Service.Interface;
+using SistemaVendas.Application.Validation;
 using SistemaVendas.Domain.Entities;
 using SistemaVendas.Domain.Interface;
 using SistemaVendas.Domain.Repository.Interface;
@@ -31,6 +33,7 @@ namespace SistemaVendas.Application.Service
 
             try
             {
+                ValidarDados(clienteDTO);
                 var cliente = _mapper.Map<Cliente>(clienteDTO);
 
                 await _clienteRepository.AtualizarAsync(cliente);
@@ -52,6 +55,7 @@ namespace SistemaVendas.Application.Service
 
             try
             {
+                ValidarDados(clienteDTO);
                 var cliente = _mapper.Map<Cliente>(clienteDTO);
 
                 await _clienteRepository.CadastrarAsync(cliente);
@@ -109,6 +113,19 @@ namespace SistemaVendas.Application.Service
 
                 throw;
             }
+        }
+
+        private void ValidarDados(ClienteDTO clienteDTO)
+        {
+            var validator = new ClienteValidator();
+            var resultado = validator.Validate(clienteDTO);
+            if (resultado.IsValid == false)
+            {
+                var erroMenssage = resultado.Errors.Select(a => a.ErrorMessage).FirstOrDefault();
+
+                throw new ValidationException(erroMenssage);
+            }
+
         }
     }
 }

@@ -33,7 +33,12 @@ namespace SistemaVendas.Froms
             var dataFim = dtFim.Value.Date;
 
             var frm = new RelatorioVendas(dataInicio, dataFim, _vendaAppService);
-            frm.ShowDialog(); 
+            frm.ShowDialog();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,12 +1,14 @@
 ﻿using AutoMapper;
 using SistemaVendas.Application.DTOs;
 using SistemaVendas.Application.Service.Interface;
+using SistemaVendas.Application.Validation;
 using SistemaVendas.Domain.Entities;
 using SistemaVendas.Domain.Interface;
 using SistemaVendas.Domain.Models;
 using SistemaVendas.Domain.Repository.Interface;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,6 +44,7 @@ namespace SistemaVendas.Application.Service
 
             try
             {
+                ValidarDados(vendaDTO);
                 foreach (var item in vendaDTO.Itens)
                 {
                     var produto = await _produtoRepository.ObterProdutoAsync(item.ProdutoId);
@@ -71,6 +74,19 @@ namespace SistemaVendas.Application.Service
                 await _unitOfWork.RollbackAsync();
                 throw;
             }
+        }
+
+        private void ValidarDados(VendaDTO vendaDTO)
+        {
+            var validator = new VendaValidator();
+            var resultado = validator.Validate(vendaDTO);
+            if (resultado.IsValid == false)
+            {
+                var erroMenssage = resultado.Errors.Select(a => a.ErrorMessage).FirstOrDefault();
+
+                throw new ValidationException(erroMenssage);
+            }
+
         }
 
 

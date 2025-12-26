@@ -33,18 +33,18 @@
             // 
             // reportViewerVendas
             // 
-            reportViewerVendas.Dock = DockStyle.Fill;
+            reportViewerVendas.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             reportViewerVendas.Location = new Point(0, 0);
             reportViewerVendas.Name = "ReportViewer";
             reportViewerVendas.ServerReport.BearerToken = null;
-            reportViewerVendas.Size = new Size(1081, 679);
+            reportViewerVendas.Size = new Size(920, 673);
             reportViewerVendas.TabIndex = 0;
             // 
             // RelatorioVendas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1081, 679);
+            ClientSize = new Size(920, 673);
             Controls.Add(reportViewerVendas);
             Name = "RelatorioVendas";
             Text = "RelatorioVendas";

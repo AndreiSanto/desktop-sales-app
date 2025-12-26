@@ -6,19 +6,19 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>3cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>6cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>3cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>3.5cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>3.5cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -35,7 +35,10 @@
                           <TextRuns>
                             <TextRun>
                               <Value>Data Venda</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -65,7 +68,10 @@
                           <TextRuns>
                             <TextRun>
                               <Value>Produto</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -95,7 +101,10 @@
                           <TextRuns>
                             <TextRun>
                               <Value>Quantidade</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -124,8 +133,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Preco</Value>
-                              <Style />
+                              <Value>Preço</Value>
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -155,7 +167,10 @@
                           <TextRuns>
                             <TextRun>
                               <Value>Subtotal</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -346,6 +361,7 @@
                             <TextRun>
                               <Value>=Fields!DataVenda.Value</Value>
                               <Style>
+                                <FontSize>11pt</FontSize>
                                 <Format>d</Format>
                               </Style>
                             </TextRun>
@@ -377,7 +393,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!Produto.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>11pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -407,7 +425,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!Quantidade.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>11pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -438,6 +458,7 @@
                             <TextRun>
                               <Value>=Fields!Preco.Value</Value>
                               <Style>
+                                <FontSize>11pt</FontSize>
                                 <Format>'R$'0.00;('R$'0.00)</Format>
                               </Style>
                             </TextRun>
@@ -470,7 +491,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!Quantidade.Value * Fields!Preco.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>11pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -565,7 +588,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!Quantidade.Value)</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>11pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -595,7 +620,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!Preco.Value)</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>11pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -625,7 +652,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Sum(Fields!Subtotal.Value)</Value>
-                              <Style />
+                              <Style>
+                                <FontSize>11pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -662,7 +691,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>2.5cm</Size>
+                <Size>3.16667cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox2">
                     <CanGrow>true</CanGrow>
@@ -672,7 +701,10 @@
                         <TextRuns>
                           <TextRun>
                             <Value>Cliente</Value>
-                            <Style />
+                            <Style>
+                              <FontSize>12pt</FontSize>
+                              <FontWeight>Bold</FontWeight>
+                            </Style>
                           </TextRun>
                         </TextRuns>
                         <Style />
@@ -709,7 +741,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>2.5cm</Size>
+                <Size>3.16667cm</Size>
                 <CellContents>
                   <Textbox Name="Cliente1">
                     <CanGrow>true</CanGrow>
@@ -719,7 +751,9 @@
                         <TextRuns>
                           <TextRun>
                             <Value>=Fields!Cliente.Value</Value>
-                            <Style />
+                            <Style>
+                              <FontSize>11pt</FontSize>
+                            </Style>
                           </TextRun>
                         </TextRuns>
                         <Style />
@@ -754,10 +788,9 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>dsRelatorioVendas</DataSetName>
-        <Top>4.90334cm</Top>
-        <Left>7.93433cm</Left>
+        <Top>3cm</Top>
         <Height>4.1198cm</Height>
-        <Width>15cm</Width>
+        <Width>22.16667cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -765,10 +798,14 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>4.60417in</Height>
-    <Style />
+    <Height>25.7cm</Height>
+    <Style>
+      <Border>
+        <Style>Solid</Style>
+      </Border>
+    </Style>
   </Body>
-  <Width>11.88925in</Width>
+  <Width>22.16667cm</Width>
   <Page>
     <PageHeader>
       <Height>2.55474cm</Height>
@@ -784,7 +821,7 @@
                 <TextRun>
                   <Value>Relatorio de Vendas</Value>
                   <Style>
-                    <FontSize>16pt</FontSize>
+                    <FontSize>20pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -793,10 +830,9 @@
               </Style>
             </Paragraph>
           </Paragraphs>
-          <Top>1.14335cm</Top>
-          <Left>7.00419cm</Left>
+          <Top>1.03752cm</Top>
           <Height>1.34083cm</Height>
-          <Width>11.52229cm</Width>
+          <Width>19cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -808,15 +844,16 @@
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
         </Textbox>
-        <Textbox Name="TextData">
+        <Textbox Name="Textbox1">
           <CanGrow>true</CanGrow>
           <KeepTogether>true</KeepTogether>
           <Paragraphs>
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>dsdsssssssssss</Value>
+                  <Value>=Now()</Value>
                   <Style>
+                    <FontSize>11pt</FontSize>
                     <Format>D</Format>
                   </Style>
                 </TextRun>
@@ -826,17 +863,18 @@
               </Style>
             </Paragraph>
           </Paragraphs>
-          <Top>1.47849cm</Top>
-          <Left>18.70287cm</Left>
+          <rd:DefaultName>Textbox1</rd:DefaultName>
+          <Top>0.26113cm</Top>
+          <Left>15.16667cm</Left>
           <Height>0.6cm</Height>
-          <Width>4.27271cm</Width>
+          <Width>5cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
             </Border>
             <PaddingLeft>2pt</PaddingLeft>
-            <PaddingRight>3pt</PaddingRight>
+            <PaddingRight>2pt</PaddingRight>
             <PaddingTop>2pt</PaddingTop>
             <PaddingBottom>2pt</PaddingBottom>
           </Style>
@@ -844,12 +882,13 @@
       </ReportItems>
       <Style>
         <Border>
-          <Style>None</Style>
+          <Style>Solid</Style>
         </Border>
+        <BackgroundColor>LightGrey</BackgroundColor>
       </Style>
     </PageHeader>
     <PageFooter>
-      <Height>2.54cm</Height>
+      <Height>2.15786cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -868,10 +907,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox3</rd:DefaultName>
-          <Top>1.41083cm</Top>
-          <Left>19.25849cm</Left>
+          <Top>1.04041cm</Top>
+          <Left>14cm</Left>
           <Height>0.6cm</Height>
-          <Width>3.02917cm</Width>
+          <Width>5cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -887,14 +926,15 @@
         <Border>
           <Style>None</Style>
         </Border>
+        <BackgroundColor>LightGrey</BackgroundColor>
       </Style>
     </PageFooter>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
+    <LeftMargin>1cm</LeftMargin>
+    <RightMargin>1cm</RightMargin>
+    <TopMargin>1cm</TopMargin>
+    <BottomMargin>1cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>

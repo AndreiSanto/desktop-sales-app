@@ -66,6 +66,11 @@ private async Task CarregarRelatorio()
 
     private async void RelatorioVendas_Load(object sender, EventArgs e)
         {
+            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            reportViewerVendas.SetDisplayMode(DisplayMode.PrintLayout);
+            reportViewerVendas.ZoomMode = ZoomMode.PageWidth;
+
             await CarregarRelatorio();
         }
     }
