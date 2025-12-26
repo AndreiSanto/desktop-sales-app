@@ -12,9 +12,7 @@ namespace SistemaVendas.Application.Validation
     {
         public VendaItemValidator()
         {
-            RuleFor(v => v.VendaId)
-                .GreaterThan(0)
-                .WithMessage("A venda é obrigatória.");
+            
 
             RuleFor(v => v.ProdutoId)
                 .GreaterThan(0)

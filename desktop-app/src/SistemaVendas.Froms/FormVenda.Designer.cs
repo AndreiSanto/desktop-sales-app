@@ -46,8 +46,6 @@
             cbProdutos = new ComboBox();
             groupBox1 = new GroupBox();
             bntAdicionarProduto = new Button();
-            nudPreco = new NumericUpDown();
-            label6 = new Label();
             nudQuantidade = new NumericUpDown();
             label7 = new Label();
             label8 = new Label();
@@ -56,7 +54,6 @@
             ((System.ComponentModel.ISupportInitialize)dataGridViewItensVenda).BeginInit();
             groupBoxListProdutos.SuspendLayout();
             groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)nudPreco).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudQuantidade).BeginInit();
             panelRodape.SuspendLayout();
             SuspendLayout();
@@ -97,6 +94,7 @@
             // 
             // dtDataVenda
             // 
+            dtDataVenda.Enabled = false;
             dtDataVenda.Location = new Point(96, 80);
             dtDataVenda.Name = "dtDataVenda";
             dtDataVenda.Size = new Size(324, 29);
@@ -142,7 +140,7 @@
             Quantidade.HeaderText = "Quantidade";
             Quantidade.MinimumWidth = 6;
             Quantidade.Name = "Quantidade";
-            Quantidade.Width = 125;
+            Quantidade.Width = 260;
             // 
             // Preco
             // 
@@ -188,6 +186,7 @@
             bntCancelar.TabIndex = 14;
             bntCancelar.Text = "Cancelar";
             bntCancelar.UseVisualStyleBackColor = true;
+            bntCancelar.Click += bntCancelar_Click;
             // 
             // bntFinalizarVenda
             // 
@@ -213,8 +212,6 @@
             // 
             groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBox1.Controls.Add(bntAdicionarProduto);
-            groupBox1.Controls.Add(nudPreco);
-            groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(nudQuantidade);
             groupBox1.Controls.Add(cbProdutos);
             groupBox1.Controls.Add(label7);
@@ -228,7 +225,7 @@
             // 
             // bntAdicionarProduto
             // 
-            bntAdicionarProduto.Location = new Point(63, 134);
+            bntAdicionarProduto.Location = new Point(40, 122);
             bntAdicionarProduto.Name = "bntAdicionarProduto";
             bntAdicionarProduto.Size = new Size(180, 30);
             bntAdicionarProduto.TabIndex = 18;
@@ -236,26 +233,9 @@
             bntAdicionarProduto.UseVisualStyleBackColor = true;
             bntAdicionarProduto.Click += btnAdicionarProduto_Click;
             // 
-            // nudPreco
-            // 
-            nudPreco.Location = new Point(496, 23);
-            nudPreco.Name = "nudPreco";
-            nudPreco.Size = new Size(143, 29);
-            nudPreco.TabIndex = 17;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(355, 28);
-            label6.Margin = new Padding(4, 0, 4, 0);
-            label6.Name = "label6";
-            label6.Size = new Size(134, 21);
-            label6.TabIndex = 16;
-            label6.Text = "Preço do Produto:";
-            // 
             // nudQuantidade
             // 
-            nudQuantidade.Location = new Point(127, 77);
+            nudQuantidade.Location = new Point(455, 23);
             nudQuantidade.Name = "nudQuantidade";
             nudQuantidade.Size = new Size(177, 29);
             nudQuantidade.TabIndex = 13;
@@ -263,12 +243,12 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(29, 79);
+            label7.Location = new Point(357, 25);
             label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(91, 21);
+            label7.Size = new Size(94, 21);
             label7.TabIndex = 11;
-            label7.Text = "Quantidade";
+            label7.Text = "Quantidade:";
             // 
             // label8
             // 
@@ -313,7 +293,6 @@
             groupBoxListProdutos.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)nudPreco).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudQuantidade).EndInit();
             panelRodape.ResumeLayout(false);
             panelRodape.PerformLayout();
@@ -329,8 +308,6 @@
         private ComboBox cbProdutos;
         private ComboBox cbClientes;
         private GroupBox groupBox1;
-        private NumericUpDown nudPreco;
-        private Label label6;
         private NumericUpDown nudQuantidade;
         private Label label7;
         private Label label8;
@@ -339,11 +316,11 @@
         private Button bntFinalizarVenda;
         private Label lblTotal;
         private DateTimePicker dtDataVenda;
+        private Panel panelRodape;
         private DataGridViewTextBoxColumn ProdutoId;
         private DataGridViewTextBoxColumn ProdutoNome;
         private DataGridViewTextBoxColumn Quantidade;
         private DataGridViewTextBoxColumn Preco;
         private DataGridViewTextBoxColumn Subtotal;
-        private Panel panelRodape;
     }
 }

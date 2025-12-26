@@ -74,5 +74,10 @@ namespace SistemaVendas.Froms
         {
             AbrirForm<FormRelatorioVendas>();
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

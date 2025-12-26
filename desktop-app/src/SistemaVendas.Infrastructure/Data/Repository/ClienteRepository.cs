@@ -120,6 +120,23 @@ namespace SistemaVendas.Infrastructure.Data.Repository
             return clientes;
         }
 
+        public async Task<bool> EmailJaExisteAsync(string email)
+        {
+            const string sql = """
+        SELECT 1
+        FROM clientes
+        WHERE email = @email
+        LIMIT 1;
+    """;
+
+            await using var cmd = new NpgsqlCommand(sql, _uow.Connection, _uow.Transaction);
+            cmd.Parameters.AddWithValue("email", email);
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            return reader.Read();
+        }
+
     }
 
 }

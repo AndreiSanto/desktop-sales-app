@@ -12,10 +12,11 @@ namespace SistemaVendas.Domain.Repository.Interface
     {
         public Task<Cliente> AtualizarAsync(Cliente cliente);
         public Task<Cliente> ObterClienteAsync(int Id);
-       // public List<Task<Cliente>> ObterClienteAsync(int Id);
         public Task<Cliente> CadastrarAsync(Cliente cliente);
        public Task<List<Cliente>> ListarClientesAsync();
         public Task<bool> ExcluirAsync(int id);
+        public Task<bool> EmailJaExisteAsync(string email);
+
 
     }
 }

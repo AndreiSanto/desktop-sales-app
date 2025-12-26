@@ -31,7 +31,6 @@
             txtNome = new TextBox();
             txtEmail = new TextBox();
             txtTelefone = new TextBox();
-            btnNovo = new Button();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -72,17 +71,6 @@
             txtTelefone.Size = new Size(247, 29);
             txtTelefone.TabIndex = 2;
             // 
-            // btnNovo
-            // 
-            btnNovo.Location = new Point(86, 251);
-            btnNovo.Margin = new Padding(4);
-            btnNovo.Name = "btnNovo";
-            btnNovo.Size = new Size(135, 48);
-            btnNovo.TabIndex = 3;
-            btnNovo.Text = "Novo";
-            btnNovo.UseVisualStyleBackColor = true;
-            btnNovo.Click += button1_Click;
-            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -121,7 +109,6 @@
             groupBoxCliente.Controls.Add(btnLimpar);
             groupBoxCliente.Controls.Add(btnExcluir);
             groupBoxCliente.Controls.Add(btnSalvar);
-            groupBoxCliente.Controls.Add(btnNovo);
             groupBoxCliente.Controls.Add(label1);
             groupBoxCliente.Controls.Add(label3);
             groupBoxCliente.Controls.Add(txtTelefone);
@@ -138,17 +125,18 @@
             // btnLimpar
             // 
             btnLimpar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnLimpar.Location = new Point(567, 251);
+            btnLimpar.Location = new Point(485, 251);
             btnLimpar.Name = "btnLimpar";
             btnLimpar.Size = new Size(135, 48);
             btnLimpar.TabIndex = 9;
             btnLimpar.Text = "Limpar";
             btnLimpar.UseVisualStyleBackColor = true;
+            btnLimpar.Click += btnLimpar_Click_1;
             // 
             // btnExcluir
             // 
             btnExcluir.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnExcluir.Location = new Point(408, 251);
+            btnExcluir.Location = new Point(303, 251);
             btnExcluir.Name = "btnExcluir";
             btnExcluir.Size = new Size(135, 48);
             btnExcluir.TabIndex = 8;
@@ -159,7 +147,7 @@
             // btnSalvar
             // 
             btnSalvar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnSalvar.Location = new Point(251, 251);
+            btnSalvar.Location = new Point(107, 251);
             btnSalvar.Name = "btnSalvar";
             btnSalvar.Size = new Size(135, 48);
             btnSalvar.TabIndex = 7;
@@ -179,9 +167,8 @@
             dataGridViewClientes.CellContentClick += dataGridViewClientes_CellContentClick;
             // 
             // groupBoxListCliente
-            //
+            // 
             groupBoxListCliente.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-
             groupBoxListCliente.Controls.Add(dataGridViewClientes);
             groupBoxListCliente.Location = new Point(25, 361);
             groupBoxListCliente.Name = "groupBoxListCliente";
@@ -216,7 +203,6 @@
         private TextBox txtNome;
         private TextBox txtEmail;
         private TextBox txtTelefone;
-        private Button btnNovo;
         private Label label1;
         private Label label2;
         private Label label3;

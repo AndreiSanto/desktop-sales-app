@@ -25,7 +25,6 @@ namespace SistemaVendas.Froms
             _vendaAppService = vendaAppService;
         }
 
-        // ========================= LOAD =========================
         private async void frmVendas_Load(object sender, EventArgs e)
         {
             await CarregarClientes();
@@ -36,7 +35,6 @@ namespace SistemaVendas.Froms
 
         }
 
-        // ========================= CLIENTES =========================
         private async Task CarregarClientes()
         {
             var clientes = await _clienteAppService.ListarClientesAsync();
@@ -63,7 +61,15 @@ namespace SistemaVendas.Froms
                 return;
 
             var produto = (Produto)cbProdutos.SelectedItem;
-            nudPreco.Text = produto.Preco.ToString("N2");
+        }
+        private void LimparCamposProduto()
+        {
+            cbProdutos.SelectedIndex = -1;
+            nudQuantidade.Value = 1;
+            cbProdutos.Focus();
+
+
+
         }
 
         private void btnAdicionarProduto_Click(object sender, EventArgs e)
@@ -92,7 +98,7 @@ namespace SistemaVendas.Froms
             var subtotal = quantidade * produto.Preco;
 
             dataGridViewItensVenda.Rows.Add(
-                produto.Id,          // ProdutoId (oculto)
+                produto.Id,
                 produto.Nome,
                 quantidade,
                 produto.Preco,
@@ -102,6 +108,8 @@ namespace SistemaVendas.Froms
             produto.QtdEstoque -= quantidade;
 
             AtualizarTotal();
+
+            LimparCamposProduto();
         }
 
         private void AtualizarTotal()
@@ -172,34 +180,64 @@ namespace SistemaVendas.Froms
                 return;
             }
 
-            var vendaDTO = new VendaDTO
+            try
             {
-                ClienteId = (int)cbClientes.SelectedValue,
-                DataVenda = DateTime.Now
-            };
-
-            foreach (DataGridViewRow row in dataGridViewItensVenda.Rows)
-            {
-                vendaDTO.Itens.Add(new VendaItemDTO
+                var vendaDTO = new VendaDTO
                 {
-                    ProdutoId = Convert.ToInt32(row.Cells["ProdutoId"].Value),
-                    Quantidade = Convert.ToInt32(row.Cells["Quantidade"].Value),
-                    PrecoVenda = Convert.ToDecimal(row.Cells["Preco"].Value)
-                });
+                    ClienteId = (int)cbClientes.SelectedValue,
+                    DataVenda = DateTime.Now
+                };
+
+                foreach (DataGridViewRow row in dataGridViewItensVenda.Rows)
+                {
+                    if (row.IsNewRow)
+                        continue;
+
+                    vendaDTO.Itens.Add(new VendaItemDTO
+                    {
+                        ProdutoId = Convert.ToInt32(row.Cells["ProdutoId"].Value),
+                        Quantidade = Convert.ToInt32(row.Cells["Quantidade"].Value),
+                        PrecoVenda = Convert.ToDecimal(row.Cells["Preco"].Value)
+                    });
+                }
+
+                vendaDTO.ValorTotal =
+                    vendaDTO.Itens.Sum(i => i.PrecoVenda * i.Quantidade);
+
+                await _vendaAppService.RealizarVenda(vendaDTO);
+
+                MessageBox.Show(
+                    "Venda realizada com sucesso!",
+                    "Sucesso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+
+                dataGridViewItensVenda.Rows.Clear();
+                lblTotal.Text = "Total: R$ 0,00";
+                cbClientes.SelectedIndex = -1;
             }
-
-            vendaDTO.ValorTotal =
-                vendaDTO.Itens.Sum(i => i.PrecoVenda * i.Quantidade);
-
-            await _vendaAppService.RealizarVenda(vendaDTO);
-
-            MessageBox.Show("Venda realizada com sucesso!");
-
-            dataGridViewItensVenda.Rows.Clear();
-            lblTotal.Text = "Total: R$ 0,00";
-            cbClientes.SelectedIndex = -1;
-
+            catch (FluentValidation.ValidationException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Erro de validação",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Erro ao realizar a venda:\n" + ex.Message,
+                    "Erro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }
+
 
         private void dataGridViewItensVenda_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -210,5 +248,38 @@ namespace SistemaVendas.Froms
         {
 
         }
+
+        private void nudPreco_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bntCancelar_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(
+                "Deseja cancelar a venda atual?",
+                "Cancelar venda",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
+            LimparFormulario();
+        }
+        private void LimparFormulario()
+        {
+            cbClientes.SelectedIndex = -1;
+
+            cbProdutos.SelectedIndex = -1;
+            nudQuantidade.Value = 1;
+
+            dataGridViewItensVenda.Rows.Clear();
+
+            lblTotal.Text = "Total: R$ 0,00";
+
+            cbClientes.Focus();
+        }
+
+
+
     }
 }

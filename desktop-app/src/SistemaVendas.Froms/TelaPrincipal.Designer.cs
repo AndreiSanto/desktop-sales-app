@@ -30,17 +30,19 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TelaPrincipal));
             panel1 = new Panel();
+            bntRelatorio = new Button();
             bntVenda = new Button();
             bntProduto = new Button();
             bntCliente = new Button();
             panelForm = new Panel();
-            bntRelatorio = new Button();
+            textBox1 = new TextBox();
             panel1.SuspendLayout();
+            panelForm.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
-            panel1.BackColor = SystemColors.ControlDarkDark;
+            panel1.BackColor = SystemColors.ControlDark;
             panel1.Controls.Add(bntRelatorio);
             panel1.Controls.Add(bntVenda);
             panel1.Controls.Add(bntProduto);
@@ -50,6 +52,20 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1265, 92);
             panel1.TabIndex = 0;
+            // 
+            // bntRelatorio
+            // 
+            bntRelatorio.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            bntRelatorio.Image = (Image)resources.GetObject("bntRelatorio.Image");
+            bntRelatorio.Location = new Point(589, 0);
+            bntRelatorio.Name = "bntRelatorio";
+            bntRelatorio.Size = new Size(220, 92);
+            bntRelatorio.TabIndex = 3;
+            bntRelatorio.Text = "Relatório";
+            bntRelatorio.TextAlign = ContentAlignment.MiddleLeft;
+            bntRelatorio.TextImageRelation = TextImageRelation.ImageBeforeText;
+            bntRelatorio.UseVisualStyleBackColor = true;
+            bntRelatorio.Click += bntRelatorio_Click;
             // 
             // bntVenda
             // 
@@ -96,6 +112,7 @@
             // 
             // panelForm
             // 
+            panelForm.Controls.Add(textBox1);
             panelForm.Dock = DockStyle.Fill;
             panelForm.Location = new Point(0, 92);
             panelForm.Name = "panelForm";
@@ -103,15 +120,17 @@
             panelForm.TabIndex = 1;
             panelForm.Paint += panelForm_Paint;
             // 
-            // bntRelatorio
+            // textBox1
             // 
-            bntRelatorio.Location = new Point(600, 0);
-            bntRelatorio.Name = "bntRelatorio";
-            bntRelatorio.Size = new Size(209, 92);
-            bntRelatorio.TabIndex = 3;
-            bntRelatorio.Text = "Relatório";
-            bntRelatorio.UseVisualStyleBackColor = true;
-            bntRelatorio.Click += bntRelatorio_Click;
+            textBox1.Enabled = false;
+            textBox1.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            textBox1.Location = new Point(290, 169);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(650, 36);
+            textBox1.TabIndex = 0;
+            textBox1.Text = "Controle de Vendas";
+            textBox1.TextAlign = HorizontalAlignment.Center;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // TelaPrincipal
             // 
@@ -125,6 +144,8 @@
             Text = "TelaPrincipal";
             Load += TelaPrincipal_Load;
             panel1.ResumeLayout(false);
+            panelForm.ResumeLayout(false);
+            panelForm.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -136,5 +157,6 @@
         private Button bntVenda;
         private Panel panelForm;
         private Button bntRelatorio;
+        private TextBox textBox1;
     }
 }

@@ -55,7 +55,15 @@ namespace SistemaVendas.Application.Service
 
             try
             {
+                var emailExiste = await _clienteRepository.EmailJaExisteAsync(clienteDTO.Email);
+
+                if (emailExiste)
+                    throw new ValidationException(
+                        "O e-mail informado já está cadastrado."
+                    );
                 ValidarDados(clienteDTO);
+
+
                 var cliente = _mapper.Map<Cliente>(clienteDTO);
 
                 await _clienteRepository.CadastrarAsync(cliente);

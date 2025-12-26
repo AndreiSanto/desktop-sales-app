@@ -70,8 +70,7 @@ namespace SistemaVendas.Froms
             txtEmail.Text = row.Cells["Email"].Value.ToString();
             txtTelefone.Text = row.Cells["Telefone"].Value.ToString();
 
-            // Se tiver ID (recomendado)
-             clienteIdSelecionado = (int)row.Cells["Id"].Value;
+            clienteIdSelecionado = (int)row.Cells["Id"].Value;
 
             EstadoEdicao();
 
@@ -101,14 +100,12 @@ namespace SistemaVendas.Froms
             txtEmail.Clear();
             txtTelefone.Clear();
 
-            btnNovo.Enabled = true;
             btnSalvar.Enabled = true;
             btnExcluir.Enabled = false;
         }
 
         private void EstadoEdicao()
         {
-            btnNovo.Enabled = false;
             btnSalvar.Enabled = true;
             btnSalvar.Text = "Alterar";
             btnExcluir.Enabled = true;
@@ -123,31 +120,64 @@ namespace SistemaVendas.Froms
                 Telefone = txtTelefone.Text
             };
 
-            if (clienteIdSelecionado == null)
+            try
             {
-                await _clienteAppService.Cadastrar(clienteDto);
-                MessageBox.Show("Cliente cadastrado com sucesso!");
-            }
-            else
-            {
-                
-                var confirmar = MessageBox.Show(
-                    "Deseja realmente alterar este cliente?",
-                    "Confirmação",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                );
-
-                if (confirmar == DialogResult.Yes)
+                if (clienteIdSelecionado == null)
                 {
-                    await _clienteAppService.Alterar(clienteDto);
-                    MessageBox.Show("Cliente alterado com sucesso!");
+                    await _clienteAppService.Cadastrar(clienteDto);
+                    MessageBox.Show(
+                        "Cliente cadastrado com sucesso!",
+                        "Sucesso",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
                 }
-            }
+                else
+                {
+                    var confirmar = MessageBox.Show(
+                        "Deseja realmente alterar este cliente?",
+                        "Confirmação",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question
+                    );
 
-            EstadoNovo();
-            await CarregarGrid();
+                    if (confirmar == DialogResult.Yes)
+                    {
+                        await _clienteAppService.Alterar(clienteDto);
+                        MessageBox.Show(
+                            "Cliente alterado com sucesso!",
+                            "Sucesso",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                        );
+                    }
+                }
+
+                EstadoNovo();
+                await CarregarGrid();
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+
+                MessageBox.Show(
+                    ex.Message,
+                    "Erro de validação",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(
+                    "Ocorreu um erro inesperado ao salvar o cliente.\n\n" + ex.Message,
+                    "Erro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }
+
 
         private async void btnExcluir_Click(object sender, EventArgs e)
         {
@@ -161,29 +191,49 @@ namespace SistemaVendas.Froms
                 MessageBoxIcon.Warning
             );
 
-            if (confirmar == DialogResult.Yes)
+            if (confirmar != DialogResult.Yes)
+                return;
+
+            try
             {
-               await _clienteAppService.Excluir(clienteIdSelecionado.Value);
-                MessageBox.Show("Cliente excluído com sucesso!");
+                await _clienteAppService.Excluir(clienteIdSelecionado.Value);
+
+                MessageBox.Show(
+                    "Cliente excluído com sucesso!",
+                    "Sucesso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
 
                 EstadoNovo();
                 await CarregarGrid();
-
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Erro ao excluir",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
+
 
         private void ConfigurarGrid()
         {
             dataGridViewClientes.AutoGenerateColumns = false;
             dataGridViewClientes.Columns.Clear();
 
+           
+            dataGridViewClientes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
             dataGridViewClientes.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Id",
                 HeaderText = "Código",
                 DataPropertyName = "Id",
-                Width = 80
+                FillWeight = 10 
             });
 
             dataGridViewClientes.Columns.Add(new DataGridViewTextBoxColumn
@@ -191,7 +241,7 @@ namespace SistemaVendas.Froms
                 Name = "Nome",
                 HeaderText = "Nome",
                 DataPropertyName = "Nome",
-                Width = 300
+                FillWeight = 30
             });
 
             dataGridViewClientes.Columns.Add(new DataGridViewTextBoxColumn
@@ -199,7 +249,7 @@ namespace SistemaVendas.Froms
                 Name = "Email",
                 HeaderText = "E-mail",
                 DataPropertyName = "Email",
-                Width = 350
+                FillWeight = 35
             });
 
             dataGridViewClientes.Columns.Add(new DataGridViewTextBoxColumn
@@ -207,7 +257,7 @@ namespace SistemaVendas.Froms
                 Name = "Telefone",
                 HeaderText = "Telefone",
                 DataPropertyName = "Telefone",
-                Width = 200
+                FillWeight = 25
             });
 
             dataGridViewClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -215,17 +265,20 @@ namespace SistemaVendas.Froms
             dataGridViewClientes.ReadOnly = true;
             dataGridViewClientes.RowHeadersVisible = false;
 
-            // Evita header "selecionado"
             dataGridViewClientes.EnableHeadersVisualStyles = false;
             dataGridViewClientes.ColumnHeadersDefaultCellStyle.SelectionBackColor =
                 dataGridViewClientes.ColumnHeadersDefaultCellStyle.BackColor;
         }
+
         private async Task CarregarGrid()
         {
             var clientes = await _clienteAppService.ListarClientesAsync();
             dataGridViewClientes.DataSource = clientes;
         }
 
-
+        private void btnLimpar_Click_1(object sender, EventArgs e)
+        {
+            EstadoNovo();
+        }
     }
 }

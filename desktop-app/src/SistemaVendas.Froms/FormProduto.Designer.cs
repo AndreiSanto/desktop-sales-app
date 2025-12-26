@@ -149,17 +149,18 @@
             // btnLimpar
             // 
             btnLimpar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnLimpar.Location = new Point(605, 158);
+            btnLimpar.Location = new Point(496, 158);
             btnLimpar.Name = "btnLimpar";
             btnLimpar.Size = new Size(135, 48);
             btnLimpar.TabIndex = 9;
             btnLimpar.Text = "Limpar";
             btnLimpar.UseVisualStyleBackColor = true;
+            btnLimpar.Click += btnLimpar_Click;
             // 
             // btnExcluir
             // 
             btnExcluir.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnExcluir.Location = new Point(447, 158);
+            btnExcluir.Location = new Point(332, 158);
             btnExcluir.Name = "btnExcluir";
             btnExcluir.Size = new Size(135, 48);
             btnExcluir.TabIndex = 8;
@@ -170,7 +171,7 @@
             // btnSalvar
             // 
             btnSalvar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnSalvar.Location = new Point(294, 158);
+            btnSalvar.Location = new Point(149, 158);
             btnSalvar.Name = "btnSalvar";
             btnSalvar.Size = new Size(135, 48);
             btnSalvar.TabIndex = 7;

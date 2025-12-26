@@ -7,7 +7,7 @@ namespace SistemaVendas.Froms
 {
     public partial class frmProdutos : Form
     {
-       
+
         private int? produtoIdSelecionado = null;
         private readonly IProdutoAppService _produtoAppService;
 
@@ -94,38 +94,71 @@ namespace SistemaVendas.Froms
             if (!Validar())
                 return;
 
-            var produtoDto = new ProdutoDTO
+            try
             {
-                Id = produtoIdSelecionado ?? 0,
-                Nome = txtNome.Text,
-                Descricao = txtDescricao.Text,
-                Preco = nudPreco.Value,
-                QtdEstoque = (int)nudEstoque.Value
-            };
-
-            if (produtoIdSelecionado == null)
-            {
-                await _produtoAppService.Cadastrar(produtoDto);
-                MessageBox.Show("Produto cadastrado com sucesso!");
-            }
-            else
-            {
-                var confirmar = MessageBox.Show(
-                    "Deseja realmente alterar este produto?",
-                    "Confirmação",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question
-                );
-
-                if (confirmar == DialogResult.Yes)
+                var produtoDto = new ProdutoDTO
                 {
-                    await _produtoAppService.Alterar(produtoDto);
-                    MessageBox.Show("Produto alterado com sucesso!");
-                }
-            }
+                    Id = produtoIdSelecionado ?? 0,
+                    Nome = txtNome.Text,
+                    Descricao = txtDescricao.Text,
+                    Preco = nudPreco.Value,
+                    QtdEstoque = (int)nudEstoque.Value
+                };
 
-            EstadoNovo();
-            await CarregarGrid();
+                if (produtoIdSelecionado == null)
+                {
+                    await _produtoAppService.Cadastrar(produtoDto);
+
+                    MessageBox.Show(
+                        "Produto cadastrado com sucesso!",
+                        "Sucesso",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
+                }
+                else
+                {
+                    var confirmar = MessageBox.Show(
+                        "Deseja realmente alterar este produto?",
+                        "Confirmação",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question
+                    );
+
+                    if (confirmar == DialogResult.Yes)
+                    {
+                        await _produtoAppService.Alterar(produtoDto);
+
+                        MessageBox.Show(
+                            "Produto alterado com sucesso!",
+                            "Sucesso",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                        );
+                    }
+                }
+
+                EstadoNovo();
+                await CarregarGrid();
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Erro de validação",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Ocorreu um erro inesperado:\n" + ex.Message,
+                    "Erro",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }
 
 
@@ -141,16 +174,34 @@ namespace SistemaVendas.Froms
                 MessageBoxIcon.Warning
             );
 
-            if (confirmar == DialogResult.Yes)
+            if (confirmar != DialogResult.Yes)
+                return;
+
+            try
             {
-                MessageBox.Show("Produto excluído com sucesso!");
+                await _produtoAppService.Excluir(produtoIdSelecionado.Value);
+
+                MessageBox.Show(
+                    "Produto excluído com sucesso!",
+                    "Sucesso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
 
                 EstadoNovo();
                 await CarregarGrid();
-
-
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    ex.Message,
+                    "Erro ao excluir produto",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
+
 
         private void ConfigurarCampos()
         {
@@ -168,12 +219,14 @@ namespace SistemaVendas.Froms
             dataGridViewProdutos.AutoGenerateColumns = false;
             dataGridViewProdutos.Columns.Clear();
 
+            dataGridViewProdutos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
             dataGridViewProdutos.Columns.Add(new DataGridViewTextBoxColumn
             {
                 Name = "Id",
                 HeaderText = "Código",
                 DataPropertyName = "Id",
-                Width = 80
+                FillWeight = 8
             });
 
             dataGridViewProdutos.Columns.Add(new DataGridViewTextBoxColumn
@@ -181,7 +234,7 @@ namespace SistemaVendas.Froms
                 Name = "Nome",
                 HeaderText = "Nome",
                 DataPropertyName = "Nome",
-                Width = 250
+                FillWeight = 25
             });
 
             dataGridViewProdutos.Columns.Add(new DataGridViewTextBoxColumn
@@ -189,7 +242,7 @@ namespace SistemaVendas.Froms
                 Name = "Descricao",
                 HeaderText = "Descrição",
                 DataPropertyName = "Descricao",
-                Width = 300
+                FillWeight = 32
             });
 
             dataGridViewProdutos.Columns.Add(new DataGridViewTextBoxColumn
@@ -197,7 +250,7 @@ namespace SistemaVendas.Froms
                 Name = "Preco",
                 HeaderText = "Preço",
                 DataPropertyName = "Preco",
-                Width = 120,
+                FillWeight = 15,
                 DefaultCellStyle = { Format = "C2" }
             });
 
@@ -206,7 +259,7 @@ namespace SistemaVendas.Froms
                 Name = "QtdEstoque",
                 HeaderText = "Estoque",
                 DataPropertyName = "QtdEstoque",
-                Width = 100
+                FillWeight = 20
             });
 
             dataGridViewProdutos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -214,7 +267,6 @@ namespace SistemaVendas.Froms
             dataGridViewProdutos.ReadOnly = true;
             dataGridViewProdutos.RowHeadersVisible = false;
 
-            // Evita header "selecionado"
             dataGridViewProdutos.EnableHeadersVisualStyles = false;
             dataGridViewProdutos.ColumnHeadersDefaultCellStyle.SelectionBackColor =
                 dataGridViewProdutos.ColumnHeadersDefaultCellStyle.BackColor;
@@ -272,6 +324,11 @@ namespace SistemaVendas.Froms
         private void dataGridViewProdutos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnLimpar_Click(object sender, EventArgs e)
+        {
+            Limpar();
         }
     }
 }
