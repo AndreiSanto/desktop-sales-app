@@ -1,4 +1,5 @@
 ﻿using SistemaVendas.Application.DTOs;
+using SistemaVendas.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,9 @@ namespace SistemaVendas.Application.Service.Interface
 {
     public interface IVendaAppService
     {
-        Task RealizarVenda(VendaDTO vendaDto);
+        public Task RealizarVenda(VendaDTO vendaDto);
+
+        public Task<List<RelatorioVendaModel>> Gerar(DateTime inicio, DateTime fim);
+
     }
 }

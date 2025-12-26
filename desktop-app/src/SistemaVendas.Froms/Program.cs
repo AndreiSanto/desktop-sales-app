@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SistemaVendas.Application;
 using SistemaVendas.Application.Extension;
 using SistemaVendas.Froms;
+using SistemaVendas.Froms.Relatorio;
 using SistemaVendas.Infrastructure.Data;
 using SistemaVendas.Infrastructure.Extension;
 using System;
@@ -35,6 +36,8 @@ namespace SistemaVendas.Forms
             services.AddTransient<frmClientes>();
             services.AddTransient<frmProdutos>();
             services.AddTransient<frmVendas>();
+            services.AddTransient<FormRelatorioVendas>();
+            services.AddTransient<RelatorioVendas>();
 
 
 

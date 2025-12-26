@@ -55,7 +55,7 @@
             txtNome.Margin = new Padding(4);
             txtNome.Name = "txtNome";
             txtNome.ShortcutsEnabled = false;
-            txtNome.Size = new Size(247, 34);
+            txtNome.Size = new Size(247, 29);
             txtNome.TabIndex = 0;
             txtNome.Tag = "";
             // 
@@ -64,7 +64,7 @@
             txtDescricao.Location = new Point(119, 80);
             txtDescricao.Margin = new Padding(4);
             txtDescricao.Name = "txtDescricao";
-            txtDescricao.Size = new Size(280, 34);
+            txtDescricao.Size = new Size(280, 29);
             txtDescricao.TabIndex = 1;
             // 
             // label1
@@ -73,7 +73,7 @@
             label1.Location = new Point(28, 32);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(66, 28);
+            label1.Size = new Size(53, 21);
             label1.TabIndex = 4;
             label1.Text = "Nome";
             label1.Click += label1_Click;
@@ -84,13 +84,14 @@
             label2.Location = new Point(28, 83);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(96, 28);
+            label2.Size = new Size(77, 21);
             label2.TabIndex = 5;
             label2.Text = "Descrição";
             label2.Click += label2_Click;
             // 
             // groupBoxProduto
             // 
+            groupBoxProduto.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBoxProduto.Controls.Add(nudEstoque);
             groupBoxProduto.Controls.Add(nudPreco);
             groupBoxProduto.Controls.Add(label5);
@@ -113,14 +114,14 @@
             // 
             nudEstoque.Location = new Point(622, 71);
             nudEstoque.Name = "nudEstoque";
-            nudEstoque.Size = new Size(166, 34);
+            nudEstoque.Size = new Size(166, 29);
             nudEstoque.TabIndex = 13;
             // 
             // nudPreco
             // 
             nudPreco.Location = new Point(605, 25);
             nudPreco.Name = "nudPreco";
-            nudPreco.Size = new Size(166, 34);
+            nudPreco.Size = new Size(166, 29);
             nudPreco.TabIndex = 12;
             nudPreco.ValueChanged += nudPreco_ValueChanged;
             // 
@@ -130,7 +131,7 @@
             label5.Location = new Point(533, 77);
             label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(82, 28);
+            label5.Size = new Size(65, 21);
             label5.TabIndex = 11;
             label5.Text = "Estoque";
             // 
@@ -140,13 +141,14 @@
             label4.Location = new Point(533, 25);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(61, 28);
+            label4.Size = new Size(49, 21);
             label4.TabIndex = 10;
             label4.Text = "Preço";
             label4.Click += label4_Click;
             // 
             // btnLimpar
             // 
+            btnLimpar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnLimpar.Location = new Point(605, 158);
             btnLimpar.Name = "btnLimpar";
             btnLimpar.Size = new Size(135, 48);
@@ -156,6 +158,7 @@
             // 
             // btnExcluir
             // 
+            btnExcluir.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnExcluir.Location = new Point(447, 158);
             btnExcluir.Name = "btnExcluir";
             btnExcluir.Size = new Size(135, 48);
@@ -166,6 +169,7 @@
             // 
             // btnSalvar
             // 
+            btnSalvar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnSalvar.Location = new Point(294, 158);
             btnSalvar.Name = "btnSalvar";
             btnSalvar.Size = new Size(135, 48);
@@ -177,16 +181,18 @@
             // dataGridViewProdutos
             // 
             dataGridViewProdutos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewProdutos.Location = new Point(0, 118);
+            dataGridViewProdutos.Dock = DockStyle.Fill;
+            dataGridViewProdutos.Location = new Point(3, 25);
             dataGridViewProdutos.Name = "dataGridViewProdutos";
             dataGridViewProdutos.RowHeadersWidth = 51;
-            dataGridViewProdutos.Size = new Size(1212, 364);
+            dataGridViewProdutos.Size = new Size(1212, 460);
             dataGridViewProdutos.TabIndex = 8;
             dataGridViewProdutos.CellClick += dataGridViewProdutos_CellClick;
             dataGridViewProdutos.CellContentClick += dataGridViewProdutos_CellContentClick;
             // 
             // groupBoxListProdutos
             // 
+            groupBoxListProdutos.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             groupBoxListProdutos.Controls.Add(dataGridViewProdutos);
             groupBoxListProdutos.Location = new Point(31, 267);
             groupBoxListProdutos.Name = "groupBoxListProdutos";
@@ -198,7 +204,7 @@
             // 
             // frmProdutos
             // 
-            AutoScaleDimensions = new SizeF(11F, 28F);
+            AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1281, 779);
             Controls.Add(groupBoxListProdutos);

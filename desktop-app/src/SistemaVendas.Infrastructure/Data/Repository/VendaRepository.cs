@@ -1,6 +1,7 @@
 ﻿using Npgsql;
 using SistemaVendas.Domain.Entities;
 using SistemaVendas.Domain.Interface;
+using SistemaVendas.Domain.Models;
 using SistemaVendas.Domain.Repository.Interface;
 using System;
 using System.Collections.Generic;
@@ -50,5 +51,52 @@ namespace SistemaVendas.Infrastructure.Data.Repository
 
             await cmd.ExecuteNonQueryAsync();
         }
+        public async Task<List<RelatorioVendaModel>> ObterRelatorioVendasAsync(
+    DateTime dataInicio,
+    DateTime dataFim)
+        {
+            var lista = new List<RelatorioVendaModel>();
+            var inicio = dataInicio.Date;
+            var fim = dataFim.Date.AddDays(1);
+
+
+            const string sql = @"
+        SELECT 
+            v.data_venda,
+            c.nome       AS cliente,
+            p.nome       AS produto,
+            i.quantidade,
+            i.preco_venda
+        FROM vendas v
+        INNER JOIN clientes c    ON c.id = v.cliente_id
+        INNER JOIN venda_itens i ON i.venda_id = v.id
+        INNER JOIN produtos p    ON p.id = i.produto_id
+        WHERE v.data_venda >= @inicio
+  AND v.data_venda <  @fim
+ORDER BY v.data_venda, c.nome
+    ";
+
+            await using var cmd = new NpgsqlCommand(sql, _uow.Connection, _uow.Transaction);
+
+            cmd.Parameters.AddWithValue("@inicio", inicio);
+            cmd.Parameters.AddWithValue("@fim", fim);
+
+            await using var reader = await cmd.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                lista.Add(new RelatorioVendaModel
+                {
+                    DataVenda = reader.GetDateTime(0),
+                    Cliente = reader.GetString(1),
+                    Produto = reader.GetString(2),
+                    Quantidade = reader.GetInt32(3),
+                    Preco = reader.GetDecimal(4)
+                });
+            }
+
+            return lista;
+        }
+
     }
 }

@@ -117,51 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="bntVenda.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAq5JREFUaEPtmbtrFUEUh68PUES09UkwvqMgQWz8B6JI0MpOUPGNSAgIdlaCTZoQ
-        SGGhojGGIBKMWFmopaRKoyAIPhKFBBXBQtH4+453QGRuIntnZncgH3zFGbJz5mx25s7s1uapIAfkOzkz
-        i5/kU3lULpCV5L30Db6Rt2Uli3kr3SDf0PAPDHqNPCm/Sv7uiKwc+yXFUMQ+GmbhlKSQMYsyZomckhSz
-        nYacYY5QyFmLMoa5QiF3LcqYLZJCPsrKLsX/i1uyt1mUMXckhZyxKGNOSwoZtChjeKQoZFLOz5OqwPJL
-        IWX6TDYNP4i+zlP6SjZNm6Qz5klqbkhyX7aoSZjkHyQdbqUhEcslu/BfspWGEAxLCmFXnIrjkpyPLQrE
-        eUmnAxalgQlOzqBnop2STicsis9mySP1RS6jIRTMEzaPFEOS2FyR5LpmUWDuSTo/YVE8FkpOseTaS0No
-        Lkg6v2VRPDokeV7KKNuiXZIEnPtj4nYSlyyKAHfHneM30hCBlfKb/CnX0xCL+5JCWONjcE7S/yOLItIl
-        SXTTovA8l/R/2KKItEsS+V7wNcsOSd/TcikNMWFpJBEJN9AQkB5Jv30WJWBEkpAX3aFYLNld0+9uGlLQ
-        LUl43aIwHJT0OW5RIrhjJH1tURjcashNSsYiyXcUEof0h1wlk/JA+gZTVHa6vTI5FyUD6LcoY/ZICnlh
-        UcawXHLooRi+cmWN+z05ZlHGcMCikCcWZcwK6bYrV2WLZGnOkkPyu6SYEJb63+2UvkEVkZuyWpYCZxMG
-        wY/k2rqj9bZG31Vob3QNH2FLwe1aGYyDYyptzCEfbm75rvlsUQm435N1Fv1hrkEVuSY67n0XjwYDw4f1
-        Nt4Z+yhyTXT4jO3ervwtj88m6aPINUngWR+SPDLIXZ1rQAWuqdV+AxeYVIcTjVr/AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="bntProduto.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAYBJREFUaEPtmD9KBFEMh0e0VNwTKNp6AyuvYbtYeghLW0tPIdiIfyq308JzCFZa
-        iFjoL4uBGQkveXnLTIp88BXzkryXMDvLMF2SJCthD77An5F9gvtwJRzCVygdNIZv8Ag2cQw/IW14C2ew
-        Fm6oli14Dan2C85hNWvwDHITl3ADevAOQqzDc8h7XPytmdiEV5AKv+EpbKFlEOYE0l2hfW7gNlR5hnx4
-        VKlHFakwoirmxInIQaKRg9SwCx8g/1VKUuwe7kAPvI+KOVGAhuB6zTvogetVzIkCH5BqD5ZXMhSjnPfl
-        VT3m/syJAvST4XrN0HeEnhFqUHtG6AU09DMyBjlINHKQaOQg0chBopGDRCPcIPTdjL5ZSZRioQbpf/z7
-        33ApRnBMxZzopN8oyw2XYgyvq5gTGymd440NMCc2UjrHGxtgTmykdI43NsCc2EjpHG9sgDlxIsIMwvvX
-        2EdaEzEnOuH9a+wjrYmYEyciB4lG9SDRVVlAqTCSjzBJEjNd9ws/rerhp8zZDwAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="bntCliente.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAptJREFUaEPtmTmLFEEYQMcbj0CRjQRjNdNUQROvDQQVMVAMRANRNFDxRNRkDcQ/
-        IV6xGPkXxBPE+wjEwEBBUbx9r5iCZVnt7ppxqpR+8GCqpuqbr3q6uqurOy0t/w5TcTNewgf4oaufL6Lf
-        2aZoNuEz/FnhU9yIxTEJz2FM9CbuwYU4s6ufrbuFsd1ZtG8xxEF8wu04AX/HRNyBto2DKQJPJxP6iEut
-        qMkyjIPZYEVOnLRxTvhPNGUn2vcJZr0AeAUyEeeEp0xT7HMbjeE/m43LaBK7QymNvWiMC6GUiYdoEgtC
-        KY1FaAzvM9l4jyYxK5TSsK8xjJUNE9Be6VecZNqBjKEdSL9oBzKG7AN5hyYwO5TSmIPGeBtKmbiLJrE4
-        lNJYgsZweZ8NlxUmcSCU0jiIxjgfSplYiybhUiV10fgIjbHGilz4dOcS3EQOWdGQw2jfx5j9SXEF/sDP
-        2OSo2vYLfsflVpTAafTIfsVdVlRgG9va55QVJeGpZWJaRWx3JpQKpOlAiqUdSGn8FwMZQpNzr6qKuJ81
-        N5QKwnvCczS5q1ZUcA1t641wtRU5cUNtK95Ak1L3qOZhFfPxPsZ+xjDWQDfpPB2O4CuMibzG/TgN6zID
-        j+MbjHGMaey/esp5tPZhfAZRF4vWTcdUHPw2vIcxrltDJ7GXuOOyCke/97jerfvTrntTjOV8MXb8nZc4
-        jH3hGLqwM7BHbRCTcyXeQX/TBan/Tk8YwGDf8AQOcqnts8pRjIvLEUxiHXo0DOSuey58d+Jy31zWW9EE
-        J3a8L6Q8MPUbr4jm8gIbXaK3oB2d4FOsyMxk9AWqOXm/qc0VtJMPTKUQH958J1ObOPrsy4dRuAwyJ/cI
-        auMLfjuVqLnVZrwAJdnS0tKITucX5iEloBMnAZEAAAAASUVORK5CYII=
-</value>
-  </data>
+  <metadata name="reportViewerVendas.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

@@ -69,5 +69,10 @@ namespace SistemaVendas.Froms
             AbrirForm<frmVendas>();
 
         }
+
+        private void bntRelatorio_Click(object sender, EventArgs e)
+        {
+            AbrirForm<FormRelatorioVendas>();
+        }
     }
 }

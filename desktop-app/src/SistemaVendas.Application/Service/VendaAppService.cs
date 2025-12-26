@@ -3,6 +3,7 @@ using SistemaVendas.Application.DTOs;
 using SistemaVendas.Application.Service.Interface;
 using SistemaVendas.Domain.Entities;
 using SistemaVendas.Domain.Interface;
+using SistemaVendas.Domain.Models;
 using SistemaVendas.Domain.Repository.Interface;
 using System;
 using System.Collections.Generic;
@@ -19,14 +20,20 @@ namespace SistemaVendas.Application.Service
         private readonly IProdutoRepository _produtoRepository;
         private readonly IMapper _mapper;
 
-        public VendaAppService(
-            IUnitOfWork unitOfWork,
-            IVendaRepository vendaRepository,
-            IProdutoRepository produtoRepository)
+        public VendaAppService(IUnitOfWork unitOfWork, IVendaRepository vendaRepository, IProdutoRepository produtoRepository, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _vendaRepository = vendaRepository;
             _produtoRepository = produtoRepository;
+            _mapper = mapper;
+        }
+
+        public  async Task<List<RelatorioVendaModel>> Gerar(DateTime inicio, DateTime fim)
+        {
+            await _unitOfWork.BeginAsync();
+            return  await _vendaRepository.ObterRelatorioVendasAsync(inicio, fim);
+            
+
         }
 
         public async Task RealizarVenda(VendaDTO vendaDTO)
@@ -65,6 +72,8 @@ namespace SistemaVendas.Application.Service
                 throw;
             }
         }
+
+
 
     }
 

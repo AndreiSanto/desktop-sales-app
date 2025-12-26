@@ -34,12 +34,14 @@
             bntProduto = new Button();
             bntCliente = new Button();
             panelForm = new Panel();
+            bntRelatorio = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlDarkDark;
+            panel1.Controls.Add(bntRelatorio);
             panel1.Controls.Add(bntVenda);
             panel1.Controls.Add(bntProduto);
             panel1.Controls.Add(bntCliente);
@@ -101,6 +103,16 @@
             panelForm.TabIndex = 1;
             panelForm.Paint += panelForm_Paint;
             // 
+            // bntRelatorio
+            // 
+            bntRelatorio.Location = new Point(600, 0);
+            bntRelatorio.Name = "bntRelatorio";
+            bntRelatorio.Size = new Size(209, 92);
+            bntRelatorio.TabIndex = 3;
+            bntRelatorio.Text = "Relatório";
+            bntRelatorio.UseVisualStyleBackColor = true;
+            bntRelatorio.Click += bntRelatorio_Click;
+            // 
             // TelaPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -123,5 +135,6 @@
         private Button bntCliente;
         private Button bntVenda;
         private Panel panelForm;
+        private Button bntRelatorio;
     }
 }

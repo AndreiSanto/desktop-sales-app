@@ -117,6 +117,7 @@
             // 
             // groupBoxCliente
             // 
+            groupBoxCliente.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBoxCliente.Controls.Add(btnLimpar);
             groupBoxCliente.Controls.Add(btnExcluir);
             groupBoxCliente.Controls.Add(btnSalvar);
@@ -136,6 +137,7 @@
             // 
             // btnLimpar
             // 
+            btnLimpar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnLimpar.Location = new Point(567, 251);
             btnLimpar.Name = "btnLimpar";
             btnLimpar.Size = new Size(135, 48);
@@ -145,6 +147,7 @@
             // 
             // btnExcluir
             // 
+            btnExcluir.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnExcluir.Location = new Point(408, 251);
             btnExcluir.Name = "btnExcluir";
             btnExcluir.Size = new Size(135, 48);
@@ -155,6 +158,7 @@
             // 
             // btnSalvar
             // 
+            btnSalvar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnSalvar.Location = new Point(251, 251);
             btnSalvar.Name = "btnSalvar";
             btnSalvar.Size = new Size(135, 48);
@@ -166,15 +170,18 @@
             // dataGridViewClientes
             // 
             dataGridViewClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewClientes.Location = new Point(6, 28);
+            dataGridViewClientes.Dock = DockStyle.Fill;
+            dataGridViewClientes.Location = new Point(3, 25);
             dataGridViewClientes.Name = "dataGridViewClientes";
-            dataGridViewClientes.Size = new Size(1198, 360);
+            dataGridViewClientes.Size = new Size(1218, 366);
             dataGridViewClientes.TabIndex = 8;
             dataGridViewClientes.CellClick += dataGridViewClientes_CellClick;
             dataGridViewClientes.CellContentClick += dataGridViewClientes_CellContentClick;
             // 
             // groupBoxListCliente
-            // 
+            //
+            groupBoxListCliente.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
             groupBoxListCliente.Controls.Add(dataGridViewClientes);
             groupBoxListCliente.Location = new Point(25, 361);
             groupBoxListCliente.Name = "groupBoxListCliente";

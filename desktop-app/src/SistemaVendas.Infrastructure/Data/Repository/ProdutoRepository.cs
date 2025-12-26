@@ -129,7 +129,7 @@ public class ProdutoRepository : IProdutoRepository
     {
         const string sql = @"
             UPDATE produtos
-            SET estoque = estoque - @quantidade
+            SET quantidade_estoque = quantidade_estoque - @quantidade
             WHERE id = @id;
         ";
 

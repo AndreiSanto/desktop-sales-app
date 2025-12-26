@@ -32,6 +32,8 @@ namespace SistemaVendas.Froms
             await CarregarProdutos();
 
             dataGridViewItensVenda.AutoGenerateColumns = false;
+            dataGridViewItensVenda.AllowUserToAddRows = false;
+
         }
 
         // ========================= CLIENTES =========================
@@ -156,6 +158,57 @@ namespace SistemaVendas.Froms
             cbClientes.SelectedIndex = -1;
         }
 
-       
+        private async void bntFinalizarVenda_Click(object sender, EventArgs e)
+        {
+            if (cbClientes.SelectedItem == null)
+            {
+                MessageBox.Show("Selecione um cliente.");
+                return;
+            }
+
+            if (dataGridViewItensVenda.Rows.Count == 0)
+            {
+                MessageBox.Show("Adicione produtos à venda.");
+                return;
+            }
+
+            var vendaDTO = new VendaDTO
+            {
+                ClienteId = (int)cbClientes.SelectedValue,
+                DataVenda = DateTime.Now
+            };
+
+            foreach (DataGridViewRow row in dataGridViewItensVenda.Rows)
+            {
+                vendaDTO.Itens.Add(new VendaItemDTO
+                {
+                    ProdutoId = Convert.ToInt32(row.Cells["ProdutoId"].Value),
+                    Quantidade = Convert.ToInt32(row.Cells["Quantidade"].Value),
+                    PrecoVenda = Convert.ToDecimal(row.Cells["Preco"].Value)
+                });
+            }
+
+            vendaDTO.ValorTotal =
+                vendaDTO.Itens.Sum(i => i.PrecoVenda * i.Quantidade);
+
+            await _vendaAppService.RealizarVenda(vendaDTO);
+
+            MessageBox.Show("Venda realizada com sucesso!");
+
+            dataGridViewItensVenda.Rows.Clear();
+            lblTotal.Text = "Total: R$ 0,00";
+            cbClientes.SelectedIndex = -1;
+
+        }
+
+        private void dataGridViewItensVenda_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

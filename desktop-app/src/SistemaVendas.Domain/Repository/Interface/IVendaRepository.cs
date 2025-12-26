@@ -1,4 +1,5 @@
 ﻿using SistemaVendas.Domain.Entities;
+using SistemaVendas.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,12 @@ using System.Threading.Tasks;
 
 namespace SistemaVendas.Domain.Repository.Interface
 {
-    public  interface IVendaRepository
+    public interface IVendaRepository
     {
-       public  Task<int> CriarVendaAsync(Venda venda);
+        public Task<int> CriarVendaAsync(Venda venda);
         public Task CriarItemVendaAsync(VendaItem item);
+        public Task<List<RelatorioVendaModel>> ObterRelatorioVendasAsync(
+            DateTime dataInicio,
+            DateTime dataFim);
     }
 }
